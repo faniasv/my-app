@@ -1,26 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap');
 @import "tailwindcss";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Shadcn Semantic Variables */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Afacad Flux', system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-heading: 'Afacad Flux', system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Your Custom Palette Variables */
+  --color-green-deep: #1A3D2B;
+  --color-green-mid: #2D6A4F;
+  --color-green-light: #B7E4C7;
+  --color-pink-soft: #F2A4B0;
+  --color-pink-pale: #FDE8EC;
+  --color-cream: #FAF7F2;
+  --color-cream-dark: #F0EBE1;
+  --color-lime: #C8E96E;
+  --color-sage: #95C8AA;
+  --color-lavender: #C5B8E8;
+  --color-mustard: #F0C060;
+  --color-terracotta: #C96B4A;
+  --color-dusty-rose: #D9A8B0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* LIGHT MODE - Background Pink Pastel & Aksen Hijau */
+  --background: #fde5eb; /* Baby pink pastel */
+  --foreground: #1A3D2B; /* green-deep */
+  --card: #FFD1DC;
+  --card-foreground: #1A3D2B;
+  --popover: #FFD1DC;
+  --popover-foreground: #1A3D2B;
+  --primary: #2D6A4F; /* green-mid */
+  --primary-foreground: #FFD1DC; 
+  --secondary: #FAF7F2; /* cream */
+  --secondary-foreground: #1A3D2B;
+  --muted: #F2A4B0; /* pink-soft */
+  --muted-foreground: #1A3D2B;
+  --accent: #95C8AA; /* sage (hijau pastel) */
+  --accent-foreground: #1A3D2B;
+  --destructive: #C96B4A; /* terracotta */
+  --border: #F2A4B0; /* pink-soft */
+  --input: #F2A4B0; 
+  --ring: #2D6A4F; /* green-mid */
+  --chart-1: #95C8AA;
+  --chart-2: #F0C060;
+  --chart-3: #C96B4A;
+  --chart-4: #C5B8E8;
+  --chart-5: #C8E96E;
+  --radius: 0.625rem;
+  --sidebar: #F2A4B0;
+  --sidebar-foreground: #1A3D2B;
+  --sidebar-primary: #2D6A4F;
+  --sidebar-primary-foreground: #FFD1DC;
+  --sidebar-accent: #95C8AA;
+  --sidebar-accent-foreground: #1A3D2B;
+  --sidebar-border: #F2A4B0;
+  --sidebar-ring: #2D6A4F;
+}
+
+.dark {
+  /* DARK MODE - Background Hijau Gelap & Teks Pink Pastel */
+  --background: #1A3D2B; /* green-deep */
+  --foreground: #FDE8EC; /* pink-pale */
+  --card: #153223; /* Darker variant of green-deep */
+  --card-foreground: #FDE8EC;
+  --popover: #1A3D2B;
+  --popover-foreground: #FDE8EC;
+  --primary: #C8E96E; /* lime */
+  --primary-foreground: #1A3D2B;
+  --secondary: #2D6A4F; /* green-mid */
+  --secondary-foreground: #FDE8EC;
+  --muted: #2D6A4F; 
+  --muted-foreground: #B7E4C7; /* green-light */
+  --accent: #B7E4C7; /* green-light (hijau aksen) */
+  --accent-foreground: #1A3D2B;
+  --destructive: #F2A4B0; /* pink-soft */
+  --border: #2D6A4F;
+  --input: #2D6A4F;
+  --ring: #C8E96E;
+  --chart-1: #C8E96E;
+  --chart-2: #F0C060;
+  --chart-3: #F2A4B0;
+  --chart-4: #C5B8E8;
+  --chart-5: #B7E4C7;
+  --sidebar: #1A3D2B;
+  --sidebar-foreground: #FDE8EC;
+  --sidebar-primary: #C8E96E;
+  --sidebar-primary-foreground: #1A3D2B;
+  --sidebar-accent: #B7E4C7;
+  --sidebar-accent-foreground: #1A3D2B;
+  --sidebar-border: #2D6A4F;
+  --sidebar-ring: #C8E96E;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Afacad Flux', system-ui, sans-serif;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 2px;
+  }
+  
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* Smooth transitions */
+  button, a {
+    transition: all 0.15s ease;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .bg-radial-fade {
+    mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 60%, transparent 100%);
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(to bottom right, var(--foreground), color-mix(in oklch, var(--foreground) 45%, transparent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes glow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-glow-spin {
+  animation: glow-spin 4s linear infinite;
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-15px, 15px) scale(0.95);
+  }
+}
+.animate-blob {
+  animation: blob 12s ease-in-out infinite;
 }
