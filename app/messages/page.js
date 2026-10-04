@@ -2,7 +2,9 @@
 // Update for Mini Challenge 3 - Server Actions
 // Update for Supabase Integration
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { deleteMessageAction } from "./action";
+import { deleteMessageAction } from "./actions";
+
+export const dynamic = "force-dynamic";
 
 export default async function MessagesPage() {
   const supabase = createSupabaseServerClient();
@@ -12,12 +14,15 @@ export default async function MessagesPage() {
     .select("*")
     .order("created_at", { ascending: false });
 
+  console.log("MESSAGES FROM SUPABASE:", messages);
+  console.log("MESSAGES ERROR:", error);
+
   if (error) {
     console.error("Supabase fetch error:", {
       message: error.message,
-    details: error.details,
-    hint: error.hint,
-    code: error.code,
+      details: error.details,
+      hint: error.hint,
+      code: error.code,
     });
 
     return (
@@ -25,7 +30,7 @@ export default async function MessagesPage() {
         <h1 className="text-3xl font-bold">Pesan Masuk</h1>
 
         <p className="mt-8 text-destructive">
-          Gagal mengambil pesan.
+          {error.message}
         </p>
       </section>
     );
