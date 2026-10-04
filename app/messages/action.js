@@ -1,24 +1,31 @@
 // Mini Challenge 3 - Server Actions
+// Update for Supabase Integration
 "use server";
 
-import { messages } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function deleteMessageAction(id) {
-  const messageId = Number(id);
+  const supabase = createSupabaseServerClient();
 
-  const index = messages.findIndex(
-    (message) => message.id === messageId
-  );
+  const { error } = await supabase
+    .from("messages")
+    .delete()
+    .eq("id", id);
 
-  if (index === -1) {
+  if (error) {
+    console.error("Supabase delete error:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code,
+    });
+
     return {
       success: false,
-      error: "Pesan tidak ditemukan.",
+      error: "Pesan gagal dihapus.",
     };
   }
-
-  messages.splice(index, 1);
 
   revalidatePath("/messages");
 

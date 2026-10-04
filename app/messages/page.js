@@ -1,9 +1,36 @@
 // BE Live 3 Server Actions
 // Update for Mini Challenge 3 - Server Actions
-import { messages } from "@/lib/db";
+// Update for Supabase Integration
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { deleteMessageAction } from "./action";
 
-export default function MessagesPage() {
+export default async function MessagesPage() {
+  const supabase = createSupabaseServerClient();
+
+  const { data: messages, error } = await supabase
+    .from("messages")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Supabase fetch error:", {
+      message: error.message,
+    details: error.details,
+    hint: error.hint,
+    code: error.code,
+    });
+
+    return (
+      <section className="mx-auto max-w-3xl px-6 py-20">
+        <h1 className="text-3xl font-bold">Pesan Masuk</h1>
+
+        <p className="mt-8 text-destructive">
+          Gagal mengambil pesan.
+        </p>
+      </section>
+    );
+  }
+
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
       <h1 className="text-3xl font-bold">Pesan Masuk</h1>
