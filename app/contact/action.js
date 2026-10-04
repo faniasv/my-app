@@ -17,22 +17,31 @@ export async function submitContactForm(formData) {
 
   const supabase = createSupabaseServerClient();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("messages")
     .insert({
       name,
       email,
       message,
-    });
+    })
+    .select()
+    .single();
 
   if (error) {
-    console.error("Supabase insert error:", error);
+    console.error("Supabase insert error:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code,
+    });
 
     return {
       success: false,
-      error: "Pesan gagal dikirim.",
+      error: error.message,
     };
   }
+
+  console.log("Message inserted:", data);
 
   return {
     success: true,
