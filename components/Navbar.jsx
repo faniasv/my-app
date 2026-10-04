@@ -24,7 +24,7 @@ export default function Navbar() {
 
   const links = [
     ...baseLinks, 
-    { href: "/favorite", label: `Favorite (${favorites?.length || 0})` }
+    { href: "/favorites", label: `Favorite (${favorites?.length || 0})` }
   ];
 
   return (
