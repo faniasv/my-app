@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { FavoriteProvider } from "@/components/Favorite-Context"; 
+import { FavoriteProvider } from "@/components/context/Favorite-Context"; 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer"; 
 

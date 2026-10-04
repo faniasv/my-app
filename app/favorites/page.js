@@ -1,6 +1,6 @@
 "use client";
 
-import { useFavorite } from "@/components/Favorite-Context";
+import { useFavorite } from "@/components/context/Favorite-Context";
 import { SearchX } from "lucide-react";
 import UserCard from "@/components/UserCard";
 

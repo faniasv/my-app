@@ -1,3 +1,4 @@
+// Modified for BE Live 3 Server Actions
 "use client";
 
 import { useState } from "react";
@@ -6,6 +7,7 @@ import { Mail, MapPin, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
+import { submitContactForm } from "./action";
 
 const contactInfo = [
   { icon: Mail, label: "Email", value: "hello@mywebsite.com" },
@@ -15,10 +17,21 @@ const contactInfo = [
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setSubmitted(true);
+
+    const formData = new FormData(event.currentTarget);
+
+    const result = await submitContactForm(formData);
+
+    if (result.success) {
+      setSubmitted(true);
+      setError("");
+    } else {
+      setError(result.error);
+    }
   }
 
   return (
@@ -28,9 +41,11 @@ export default function Contact() {
       <div className="mx-auto max-w-6xl px-6 py-20">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold text-primary">Contact</p>
+
           <h1 className="mt-2 text-4xl font-bold tracking-tight md:text-5xl">
             Let&apos;s talk
           </h1>
+
           <p className="mt-4 text-muted-foreground">
             Have a project or question in mind? Send us a message and
             we&apos;ll get back to you.
@@ -48,9 +63,15 @@ export default function Contact() {
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Icon className="size-5" />
                   </div>
+
                   <div>
-                    <p className="text-xs text-muted-foreground">{label}</p>
-                    <p className="text-sm font-medium">{value}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {label}
+                    </p>
+
+                    <p className="text-sm font-medium">
+                      {value}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -61,7 +82,10 @@ export default function Contact() {
             <CardContent>
               {submitted ? (
                 <div className="flex h-full min-h-64 flex-col items-center justify-center text-center">
-                  <p className="text-lg font-semibold">Message sent</p>
+                  <p className="text-lg font-semibold">
+                    Message sent
+                  </p>
+
                   <p className="mt-2 text-sm text-muted-foreground">
                     Thanks for reaching out — we&apos;ll reply soon.
                   </p>
@@ -79,8 +103,10 @@ export default function Contact() {
                       >
                         Name
                       </label>
+
                       <Input
                         id="name"
+                        name="name"
                         placeholder="Your name"
                         required
                       />
@@ -93,8 +119,10 @@ export default function Contact() {
                       >
                         Email
                       </label>
+
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="you@example.com"
                         required
@@ -109,14 +137,22 @@ export default function Contact() {
                     >
                       Message
                     </label>
+
                     <textarea
                       id="message"
+                      name="message"
                       rows={5}
                       required
                       placeholder="Tell us about your project..."
                       className="w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                     />
                   </div>
+
+                  {error && (
+                    <p className="text-sm text-destructive">
+                      {error}
+                    </p>
+                  )}
 
                   <Button
                     type="submit"

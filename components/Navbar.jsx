@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toogle"; 
-import { useFavorite } from "@/components/Favorite-Context"; 
+import { useFavorite } from "@/components/context/Favorite-Context"; 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -14,7 +14,8 @@ const baseLinks = [
   { href: "/services", label: "Services" },
   { href: "/profile", label: "Profile" },
   { href: "/contact", label: "Contact" },
-  { href: "/users", label: "User" }
+  { href: "/users", label: "User" },
+  { href: "/messages", label: "Messages" }
 ];
 
 export default function Navbar() {

@@ -2,7 +2,7 @@
 
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useFavorite } from "@/components/Favorite-Context"; 
+import { useFavorite } from "@/components/context/Favorite-Context"; 
 import {
   Card,
   CardContent,
