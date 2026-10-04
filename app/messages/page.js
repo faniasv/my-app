@@ -2,7 +2,7 @@
 // Update for Mini Challenge 3 - Server Actions
 // Update for Supabase Integration
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { deleteMessageAction } from "./actions";
+import { deleteMessageAction } from "./action";
 
 export const dynamic = "force-dynamic";
 
