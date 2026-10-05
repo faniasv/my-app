@@ -1,14 +1,12 @@
 // BE Live 3 Server Actions
 // Update for Mini Challenge 3 - Server Actions
 // Update for Supabase Integration
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { supabase } from "@/lib/supabase/server";
 import { deleteMessageAction } from "./action";
 
 export const dynamic = "force-dynamic";
 
 export default async function MessagesPage() {
-  const supabase = createSupabaseServerClient();
-
   const { data: messages, error } = await supabase
     .from("messages")
     .select("*")
