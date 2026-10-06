@@ -13,7 +13,7 @@ export function FavoriteProvider({ children }) {
   useEffect(() => {
     async function loadFavorites() {
       try {
-        const res = await fetch("/api/favorites-db");
+        const res = await fetch("/api/favorites");
 
         if (!res.ok) {
           throw new Error("Gagal mengambil data favorites");
@@ -33,7 +33,7 @@ export function FavoriteProvider({ children }) {
 
   async function addFavorite(user) {
     try {
-      const res = await fetch("/api/favorites-db", {
+      const res = await fetch("/api/favorites", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export function FavoriteProvider({ children }) {
 
   async function removeFavorite(userId) {
     try {
-      const res = await fetch(`/api/favorites-db/${userId}`, {
+      const res = await fetch(`/api/favorites/${userId}`, {
         method: "DELETE",
       });
 
