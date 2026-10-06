@@ -1,5 +1,6 @@
 // Update
 // BE 2 CRUD not using useState again, but using Context API to manage state globally
+// DB Live 2 Connect to Supabase
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
@@ -10,39 +11,76 @@ export function FavoriteProvider({ children }) {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    fetch("/api/favorites")
-      .then((res) => res.json())
-      .then(setFavorites);
+    async function loadFavorites() {
+      try {
+        const res = await fetch("/api/favorites-db");
+
+        if (!res.ok) {
+          throw new Error("Gagal mengambil data favorites");
+        }
+
+        const data = await res.json();
+
+        setFavorites(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load favorites:", error);
+        setFavorites([]);
+      }
+    }
+
+    loadFavorites();
   }, []);
 
   async function addFavorite(user) {
-    const res = await fetch("/api/favorites", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    });
+    try {
+      const res = await fetch("/api/favorites-db", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
-    if (res.ok) {
-      const saved = await res.json();
-      setFavorites((prev) => [...prev, saved]);
+      const result = await res.json();
+
+      if (!res.ok) {
+        console.error("Failed to add favorite:", result.error);
+        return;
+      }
+
+      setFavorites((prev) => [...prev, result]);
+    } catch (error) {
+      console.error("Failed to add favorite:", error);
     }
   }
 
   async function removeFavorite(userId) {
-    const res = await fetch(`/api/favorites/${userId}`, {
-      method: "DELETE",
-    });
+    try {
+      const res = await fetch(`/api/favorites-db/${userId}`, {
+        method: "DELETE",
+      });
 
-    if (res.ok) {
-      setFavorites((prev) => prev.filter((f) => f.id !== userId));
+      const result = await res.json();
+
+      if (!res.ok) {
+        console.error("Failed to remove favorite:", result.error);
+        return;
+      }
+
+      setFavorites((prev) =>
+        prev.filter((favorite) => favorite.id !== userId)
+      );
+    } catch (error) {
+      console.error("Failed to remove favorite:", error);
     }
   }
 
   function isFavorite(userId) {
-    return favorites.some((f) => f.id === userId);
+    return favorites.some(
+      (favorite) => favorite.id === userId
+    );
   }
 
-  // Tambahkan ini
   async function toggleFavorite(user) {
     if (isFavorite(user.id)) {
       await removeFavorite(user.id);
