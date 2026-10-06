@@ -1,8 +1,10 @@
+// DB Live 2 Connect to Supabase
+// Connect to favorite
 "use client";
 
 import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useFavorite } from "@/components/context/Favorite-Context"; 
+import { useFavorite } from "@/components/context/Favorite-Context";
 import {
   Card,
   CardContent,
@@ -11,10 +13,8 @@ import {
 } from "@/components/ui/card";
 
 export default function UserCard({ user }) {
-  // 1. Panggil fungsi dari FavoriteContext
   const { isFavorite, toggleFavorite } = useFavorite();
-  
-  // 2. Deklarasikan variabel 'favorited' di sini
+
   const favorited = isFavorite(user.id);
 
   const initials = user.name
@@ -31,28 +31,36 @@ export default function UserCard({ user }) {
           <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/40 to-primary/10 text-sm font-semibold">
             {initials}
           </div>
-          <CardTitle className="truncate">{user.name}</CardTitle>
+
+          <CardTitle className="truncate">
+            {user.name}
+          </CardTitle>
         </div>
       </CardHeader>
 
       <CardContent>
-        <p className="truncate text-sm text-muted-foreground">{user.email}</p>
+        <p className="truncate text-sm text-muted-foreground">
+          {user.email}
+        </p>
 
         <p className="mt-1 truncate text-sm text-muted-foreground">
-          {user.company.name}
+          {user.company_name}
         </p>
 
         <div className="mt-4 flex gap-2">
-          <Button className="flex-1 rounded-full">View Profile</Button>
-          
-          {/* Tombol Favorite menggunakan variabel 'favorited' */}
-          <Button 
+          <Button className="flex-1 rounded-full">
+            View Profile
+          </Button>
+
+          <Button
             variant={favorited ? "default" : "outline"}
-            className="flex-1 rounded-full gap-2 transition-all"
+            className="flex-1 gap-2 rounded-full transition-all"
             onClick={() => toggleFavorite(user)}
           >
-            <Heart 
-              className={`size-4 ${favorited ? "fill-white text-white" : ""}`} 
+            <Heart
+              className={`size-4 ${
+                favorited ? "fill-white text-white" : ""
+              }`}
             />
             {favorited ? "Favourite" : "Add Favourite"}
           </Button>
