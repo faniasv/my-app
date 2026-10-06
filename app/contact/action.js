@@ -3,7 +3,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache"; // ← tambah
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/server";
 
 export async function submitContactForm(formData) {
   const name = formData.get("name");
