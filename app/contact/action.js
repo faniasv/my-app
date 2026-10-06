@@ -1,7 +1,9 @@
 // BE Live 3 Server Actions
+// DB Live 2 Connect to Supabase
 "use server";
 
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache"; // ← tambah
+import { supabase } from "@/lib/supabase";
 
 export async function submitContactForm(formData) {
   const name = formData.get("name");
@@ -9,41 +11,18 @@ export async function submitContactForm(formData) {
   const message = formData.get("message");
 
   if (!name || !email || !message) {
-    return {
-      success: false,
-      error: "Semua field wajib diisi.",
-    };
+    return { success: false, error: "Semua field wajib diisi." };
   }
 
-  const supabase = createSupabaseServerClient();
-
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("messages")
-    .insert({
-      name,
-      email,
-      message,
-    })
-    .select()
-    .single();
+    .insert({ name, email, message });
 
   if (error) {
-    console.error("Supabase insert error:", {
-      message: error.message,
-      details: error.details,
-      hint: error.hint,
-      code: error.code,
-    });
-
-    return {
-      success: false,
-      error: error.message,
-    };
+    return { success: false, error: error.message };
   }
 
-  console.log("Message inserted:", data);
+  revalidatePath("/messages"); // ← tambah
 
-  return {
-    success: true,
-  };
+  return { success: true };
 }
